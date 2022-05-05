@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #8C11BE;
+    width: 100vw;
+    height: 100vh;
+}
+
+/*Fonts rules*/
+
+/* font-family: 'Raleway', sans-serif;
+font-family: 'Saira Stencil One', cursive; */

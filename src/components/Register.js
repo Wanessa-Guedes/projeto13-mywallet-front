@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from 'react-router';
@@ -16,7 +16,10 @@ function Register(){
                 const data = { name: userRegisterInfo.name, email: userRegisterInfo.email, password: userRegisterInfo.password, confirm: userRegisterInfo.confirm};
                 console.log(data)
                 await axios.post("http://localhost:5000/signUp", data);
-                navigate("/");
+                    //{name: 'Teste123', email: 'teste123@gmail.com', password: 'teste123', confirm: 'teste123'}
+                    //{name: 'Teste1234', email: 'teste1234@gmail.com', password: 'teste1234', confirm: 'teste1234'}
+                    //{name: 'teste12345', email: 'teste12345@gmail.com', password: 'teste12345', confirm: 'teste12345'}
+                    navigate("/");
             } else {
                 alert("As senhas não são iguais! Tente novamente.");
                 setUserRegisterInfo({ name:"", email: "", password: "", confirm:""});

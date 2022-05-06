@@ -1,21 +1,28 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from 'react-router';
+import Context from "./contexts/Context";
 
 function SignIn () {
 
     const [userSignInInfo, setUserSignInInfo] = useState({ email: "", password: "" });
-    //const navigate = useNavigate();
+    const {token, setToken} = useContext(Context);
+    const {userName, setUserName} = useContext(Context);
+    const navigate = useNavigate();
 
-    async function postSignIn (e) {
+    async function postSignIn(e) {
         e.preventDefault();
         try {
             const data = { email: userSignInInfo.email, password: userSignInInfo.password};
-            await axios.post("http://localhost:5000/sign-in", data);
-            //TODO: navigate("Para a tela 3 ou 6 --> Depende dos dados cadastrados!")
+            const promise = await axios.post("http://localhost:5000/sign-in", data);
+                setUserName(promise.data.name);
+                setToken(promise.data.token);
+                navigate("/mainpage");
         } catch (e) {
-            console.log("Erro ao efetuar o log-in.")
+            alert("Erro ao efetuar o log-in.")
+            setUserSignInInfo({ email: "", password: "" });
         }
     } 
 //TODO: Tem que colocar um onClick no botão Entrar

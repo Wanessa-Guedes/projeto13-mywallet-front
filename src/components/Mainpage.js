@@ -1,30 +1,40 @@
 import styled from "styled-components";
-
+import axios from "axios";
+import { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router';
+import Context from "./contexts/Context";
 
 //TODO: iON-ICON EXIT REDIRECIONAR PARA A PÁGINA PRINCIPAL E LIMPAR USUÁRIO E SENHA
 //TODO: Não há registros de Entrada ou saída --> Ai tem que fazer uma lógica com os estados provavelmente
 //TODO: Botões Nova entrada e Nova saída tem que levar para as próximas rotas
 function Mainpage (){
-    const dadosEntrada = [{
-        description:"Almoço mãe",
-        value:"39,90"
-    }, {
-        description:"Compras churrasco",
-        value:"67,60"
-    },
-    {
-        description:"Salário",
-        value:"3000,00"
-    }];
+
+    const {token, setToken} = useContext(Context);
+    const {userName, setUserName} = useContext(Context);
+    const [registers, setRegisters] = useState("");
+
+    console.log(userName);
+    
+    useEffect(() => {
+
+            const promise = axios.get("http://localhost:5000/mainpage", {
+                headers: {"Authorization": `Bearer ${token}`}
+            });
+            promise.then(res => {
+                console.log(res.data)
+                setRegisters(res.data)});
+            promise.catch(e => console.log('Erro na página principal', e));
+        }, [])
 
     function mainData(){
         return(
             
-                (dadosEntrada.length === 0) ? (
+                (registers.length === 0) ? (
                     <div><p> Não há registros de entrada ou saída</p></div>
                 ) : (
-                    <div> {dadosEntrada.map((dado, item) => {
-                        return <p>{dado.description}, {dado.value}</p>
+                    <div> {registers.map((register, item) => {
+                        return <p>{register.description}, {register.value}</p>
                     })} </div>
                 )
                 
@@ -38,7 +48,7 @@ function Mainpage (){
         <>
         <Container>
             <Header>
-                <h1>Olá, Fulano</h1>
+                <h1>Olá, {userName}</h1>
                 <ion-icon name="exit-outline"></ion-icon>
             </Header>
                     {infosMainData}

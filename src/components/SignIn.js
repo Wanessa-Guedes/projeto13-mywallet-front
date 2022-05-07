@@ -21,7 +21,7 @@ function SignIn () {
                 setToken(promise.data.token);
                 navigate("/mainpage");
         } catch (e) {
-            alert("Erro ao efetuar o log-in.")
+            console.log("Erro ao efetuar o log-in.", e)
             setUserSignInInfo({ email: "", password: "" });
         }
     } 

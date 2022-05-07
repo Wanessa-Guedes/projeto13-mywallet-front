@@ -1,20 +1,29 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
+import Context from "./contexts/Context";
+import { useNavigate } from 'react-router';
 
 function Inflow(){
 
     const [inflowInInfo, setInflowInInfo] = useState({ value: "", description: "" });
-
-    //TODO: MUDAR ESSA FUNÇÃO E O NOME DELA
-    async function postSignIn (e) {
+    const {token, setToken} = useContext(Context);
+    const navigate = useNavigate();
+    async function postInflow(e) {
         e.preventDefault();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
         try {
             const data = { value: inflowInInfo.value, description: inflowInInfo.description};
-            await axios.post("http://localhost:5000/sign-in", data);
-            //TODO: navigate("Para a tela 3 ou 6 --> Depende dos dados cadastrados!")
+            await axios.post("http://localhost:5000/inflow", data, config);
+                setInflowInInfo({ value: "", description: "" });
+                navigate("/mainpage");
         } catch (e) {
-            console.log("Erro ao efetuar ao registrar entrada.")
+            console.log("Erro ao efetuar ao registrar entrada.");
+            setInflowInInfo({ value: "", description: "" });
         }
     } 
 
@@ -36,13 +45,12 @@ function Inflow(){
     }
 
     const formularioInflow = montarFormularioInflow();
-    //TODO: Olhar track it: Cadastro e login
 
     return(
         <>
             <Main>
-                <h1> Nova entrada </h1>
-            <FormularioCompra onSubmit={postSignIn}>
+                <h1> Nova saída </h1>
+            <FormularioCompra onSubmit={postInflow}>
                     {formularioInflow}
             </FormularioCompra>
             </Main>

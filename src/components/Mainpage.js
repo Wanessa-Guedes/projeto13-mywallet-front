@@ -13,35 +13,36 @@ function Mainpage (){
     const {token, setToken} = useContext(Context);
     const {userName, setUserName} = useContext(Context);
     const [registers, setRegisters] = useState("");
+    const navigate = useNavigate();
 
-    console.log(userName);
-    
     useEffect(() => {
-
             const promise = axios.get("http://localhost:5000/mainpage", {
                 headers: {"Authorization": `Bearer ${token}`}
             });
             promise.then(res => {
-                console.log(res.data)
-                setRegisters(res.data)});
+                if(res.data.length > 0){
+                setRegisters(res.data)}});
             promise.catch(e => console.log('Erro na página principal', e));
-        }, [])
+        }, [token])
+        
 
     function mainData(){
+
         return(
             
                 (registers.length === 0) ? (
                     <div><p> Não há registros de entrada ou saída</p></div>
                 ) : (
-                    <div> {registers.map((register, item) => {
-                        return <p>{register.description}, {register.value}</p>
-                    })} </div>
+                    <> {registers[0].map((register, item) => {
+                        return (<Registers>{register.day} <p>{register.description}</p> <span color={register.type}>{register.value}</span></Registers>)
+                    })} </>
                 )
-                
         )
     }
-        
-    
+
+    function logout(){
+        navigate("/");
+    }
 
     const infosMainData = mainData();
     return(
@@ -49,12 +50,16 @@ function Mainpage (){
         <Container>
             <Header>
                 <h1>Olá, {userName}</h1>
-                <ion-icon name="exit-outline"></ion-icon>
+                <span onClick={() => logout()}><ion-icon name="exit-outline"></ion-icon></span>
             </Header>
-                    {infosMainData}
+                    <Main>
+                                {infosMainData}
+                                <h3>Saldo <span type={registers[1] >= 0 ? true : false}>{registers[1]}</span></h3>
+                        
+                    </Main>
             <Footer>
-                <button><ion-icon name="add-circle-outline"></ion-icon> Nova entrada</button>
-                <button><ion-icon name="remove-circle-outline"></ion-icon> Nova saída</button>
+                <StyledLink to="/inflow"><ion-icon name="add-circle-outline"></ion-icon> Nova entrada</StyledLink>
+                <StyledLink to="/outflow"><ion-icon name="remove-circle-outline"></ion-icon> Nova saída</StyledLink>
             </Footer>
         </Container>
         </>
@@ -70,15 +75,6 @@ const Container = styled.div`
     height: 100vh;
     justify-content: space-evenly;
     align-items: center;
-
-    div {
-        display: flex;
-        align-items: center;
-        width: 80vw;
-        height: 70vh;
-        background: #FFFFFF;
-        border-radius: 5px;
-    }
 
     p {
         font-family: 'Raleway';
@@ -117,9 +113,11 @@ const Footer = styled.footer`
     width: 80vw;
     justify-content: space-between;
     align-items: center;
+`;
 
-button {
-    display: flex;
+const StyledLink = styled(Link)`
+
+display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     width: 35vw;
@@ -133,6 +131,75 @@ button {
     line-height: 20px;
     color: #FFFFFF;
     border: none;
-}
+`;
 
+const Main = styled.main`
+    display: flex;
+    // align-items: center;
+    width: 80vw;
+    height: 70vh;
+    background: #FFFFFF;
+    border-radius: 5px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #C6C6C6;
+    flex-direction: column;
+
+    h4 {
+        display: flex;
+    }
+
+    h3 {
+        display: flex;
+        height: 100%;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin: 1% 3%;
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 17px;
+        line-height: 20px;
+        color: #000000;
+    }
+
+    span {
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 20px;
+        //color: ${props => console.log((props.type))};
+    }
+`;
+
+const Registers = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+   // height: 100%;
+    flex-direction: initial;
+    justify-content: space-around;
+    padding-top: 8%;
+
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+color: #C6C6C6;
+
+    p {
+        font-size: 16px;
+        line-height: 19px;
+        color: #000000;
+    }
+
+    span{
+        color: ${props => console.log(props.color)};
+    }
 `;

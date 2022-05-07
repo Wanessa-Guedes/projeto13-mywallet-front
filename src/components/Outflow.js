@@ -1,20 +1,29 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
+import Context from "./contexts/Context";
+import { useNavigate } from 'react-router';
 
 function Outflow(){
 
     const [outflowInInfo, setOutflowInInfo] = useState({ value: "", description: "" });
-
-    //TODO: MUDAR ESSA FUNÇÃO E O NOME DELA
-    async function postSignIn (e) {
+    const {token, setToken} = useContext(Context);
+    const navigate = useNavigate();
+    async function postOutflow(e) {
         e.preventDefault();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
         try {
             const data = { value: outflowInInfo.value, description: outflowInInfo.description};
-            await axios.post("http://localhost:5000/sign-in", data);
-            //TODO: navigate("Para a tela 3 ou 6 --> Depende dos dados cadastrados!")
+            await axios.post("http://localhost:5000/outflow", data, config);
+                setOutflowInInfo({ value: "", description: "" });
+                navigate("/mainpage");
         } catch (e) {
-            console.log("Erro ao efetuar ao registrar entrada.")
+            console.log("Erro ao efetuar ao registrar entrada.");
+            setOutflowInInfo({ value: "", description: "" });
         }
     } 
 
@@ -36,13 +45,12 @@ function Outflow(){
     }
 
     const formularioOutflow = montarFormularioOutflow();
-    //TODO: Olhar track it: Cadastro e login
 
     return(
         <>
             <Main>
                 <h1> Nova saída </h1>
-            <FormularioCompra onSubmit={postSignIn}>
+            <FormularioCompra onSubmit={postOutflow}>
                     {formularioOutflow}
             </FormularioCompra>
             </Main>

@@ -25,18 +25,21 @@ function Mainpage (){
             promise.catch(e => console.log('Erro na página principal', e));
         }, [token])
         
+        
 
     function mainData(){
 
         return(
-            
-                (registers.length === 0) ? (
+                (registers.length > 0)?(
+                (registers[0].length === 0) ? (
                     <div><p> Não há registros de entrada ou saída</p></div>
                 ) : (
                     <> {registers[0].map((register, item) => {
-                        return (<Registers>{register.day} <p>{register.description}</p> <span color={register.type}>{register.value}</span></Registers>)
+                        return (<Registers>{register.day} <p>{register.description}</p> <span className={register.type == "entry" ? "entry" : "exit"}>{parseInt(register.value).toFixed(2)}</span></Registers>)
                     })} </>
                 )
+        ):(<div><p>Carregando...</p></div>)
+        
         )
     }
 
@@ -54,8 +57,12 @@ function Mainpage (){
             </Header>
                     <Main>
                                 {infosMainData}
-                                <h3>Saldo <span type={registers[1] >= 0 ? true : false}>{registers[1]}</span></h3>
-                        
+                                {
+                                (registers.length > 0)?(
+                                (registers[0].length > 0) ?
+                                    (<h3>Saldo <span className={registers[1] >= 0 ? "positive" : "negative"}>{parseInt(registers[1]).toFixed(2)}</span></h3>) :
+                                    (<></>)):(<></>)
+                                }
                     </Main>
             <Footer>
                 <StyledLink to="/inflow"><ion-icon name="add-circle-outline"></ion-icon> Nova entrada</StyledLink>
@@ -117,7 +124,7 @@ const Footer = styled.footer`
 
 const StyledLink = styled(Link)`
 
-display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     width: 35vw;
@@ -131,11 +138,14 @@ display: flex;
     line-height: 20px;
     color: #FFFFFF;
     border: none;
+    text-decoration: none;
+    padding: 2%
 `;
 
 const Main = styled.main`
     display: flex;
-    // align-items: center;
+    //align-items: center;
+    justify-content: center;
     width: 80vw;
     height: 70vh;
     background: #FFFFFF;
@@ -172,7 +182,15 @@ const Main = styled.main`
         font-weight: 400;
         font-size: 17px;
         line-height: 20px;
-        //color: ${props => console.log((props.type))};
+        text-align: right; 
+    }
+
+    .positive {
+        color: #03AC00;
+    }
+
+    .negative {
+        color: #C70000;
     }
 `;
 
@@ -184,6 +202,7 @@ const Registers = styled.div`
     flex-direction: initial;
     justify-content: space-around;
     padding-top: 8%;
+    text-align: right;
 
     font-family: 'Raleway';
     font-style: normal;
@@ -191,7 +210,7 @@ const Registers = styled.div`
     font-size: 16px;
     line-height: 19px;
 
-color: #C6C6C6;
+    color: #C6C6C6;
 
     p {
         font-size: 16px;
@@ -199,7 +218,20 @@ color: #C6C6C6;
         color: #000000;
     }
 
-    span{
-        color: ${props => console.log(props.color)};
+    .entry {
+        textt-align: right;
+        color: #03AC00;
+    }
+
+    .exit {
+        color: #C70000; 
+    }
+
+    span {
+        display: flex;
+        align-itens: right;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
     }
 `;

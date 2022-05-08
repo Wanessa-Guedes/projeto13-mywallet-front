@@ -8,6 +8,16 @@ body {
     height: 100vh;*/
 }
 
+::placeholder {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #000000;
+    padding: 2%;
+}
+
 /*Fonts rules*/
 
 /* font-family: 'Raleway', sans-serif;

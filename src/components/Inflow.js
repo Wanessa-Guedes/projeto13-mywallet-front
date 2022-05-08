@@ -44,12 +44,20 @@ function Inflow(){
         )
     }
 
+    function back(){
+        navigate("/mainpage");
+        setInflowInInfo({ value: "", description: "" });
+    }
+
     const formularioInflow = montarFormularioInflow();
 
     return(
         <>
             <Main>
-                <h1> Nova saída </h1>
+                <Header>
+                <h1> Nova entrada </h1>
+                <span onClick={() => back()}><ion-icon name="arrow-redo-outline"></ion-icon></span>
+                </Header>
             <FormularioCompra onSubmit={postInflow}>
                     {formularioInflow}
             </FormularioCompra>
@@ -114,6 +122,32 @@ const Main = styled.main`
         color: #FFFFFF 
     }
 
+    ion-icon {
+        color: #FFFFFF;
+        font-size: 26px;
+    }
+
 ` ;
+
+const Header = styled.header`
+    display: flex;
+    width: 80vw;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 31px;
+        color: #FFFFFF;
+    }
+
+    ion-icon {
+        color: #FFFFFF;
+        font-size: 26px;
+    }
+`;
 
 

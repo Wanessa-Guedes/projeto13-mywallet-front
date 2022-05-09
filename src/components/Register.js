@@ -15,7 +15,7 @@ function Register(){
             if(userRegisterInfo.password === userRegisterInfo.confirm){
                 const data = { name: userRegisterInfo.name, email: userRegisterInfo.email, password: userRegisterInfo.password, confirm: userRegisterInfo.confirm};
                 console.log(data)
-                await axios.post("http://localhost:5000/signUp", data);
+                await axios.post("https://project13-mywallet.herokuapp.com/signUp", data);
                     navigate("/");
             } else {
                 alert("As senhas não são iguais! Tente novamente.");

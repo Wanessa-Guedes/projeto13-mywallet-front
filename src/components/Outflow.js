@@ -18,7 +18,7 @@ function Outflow(){
         }
         try {
             const data = { value: outflowInInfo.value, description: outflowInInfo.description};
-            await axios.post("http://localhost:5000/outflow", data, config);
+            await axios.post("https://project13-mywallet.herokuapp.com/outflow", data, config);
                 setOutflowInInfo({ value: "", description: "" });
                 navigate("/mainpage");
         } catch (e) {

@@ -18,7 +18,7 @@ function Inflow(){
         }
         try {
             const data = { value: inflowInInfo.value, description: inflowInInfo.description};
-            await axios.post("http://localhost:5000/inflow", data, config);
+            await axios.post("https://project13-mywallet.herokuapp.com/inflow", data, config);
                 setInflowInInfo({ value: "", description: "" });
                 navigate("/mainpage");
         } catch (e) {

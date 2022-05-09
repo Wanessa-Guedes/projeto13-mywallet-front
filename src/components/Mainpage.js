@@ -13,7 +13,7 @@ function Mainpage (){
     const navigate = useNavigate();
 
     useEffect(() => {
-            const promise = axios.get("http://localhost:5000/mainpage", {
+            const promise = axios.get("https://project13-mywallet.herokuapp.com/mainpage", {
                 headers: {"Authorization": `Bearer ${token}`}
             });
             promise.then(res => {

@@ -16,7 +16,7 @@ function SignIn () {
         e.preventDefault();
         try {
             const data = { email: userSignInInfo.email, password: userSignInInfo.password};
-            const promise = await axios.post("http://localhost:5000/sign-in", data);
+            const promise = await axios.post("https://project13-mywallet.herokuapp.com/sign-in", data);
                 setUserName(promise.data.name);
                 setToken(promise.data.token);
                 navigate("/mainpage");

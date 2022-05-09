@@ -31,7 +31,7 @@ function Inflow(){
     function montarFormularioInflow(){
         return (
             <>
-                <input type="text" id="value" value={inflowInInfo.value} placeholder="Valor" required
+                <input type="number" id="value" value={inflowInInfo.value} placeholder="Valor" required
                     onChange={(e) => setInflowInInfo({ ...inflowInInfo, value: e.target.value })} />
 
                 <input type="text" id="description" value={inflowInInfo.description} placeholder="Descrição" required

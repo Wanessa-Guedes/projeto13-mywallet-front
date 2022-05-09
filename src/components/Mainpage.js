@@ -34,9 +34,9 @@ function Mainpage (){
                 (registers[0].length === 0) ? (
                     <div><p> Não há registros de entrada ou saída</p></div>
                 ) : (
-                    <> {registers[0].map((register, item) => {
-                        return (<Registers>{register.day} <p>{register.description}</p> <span className={register.type == "entry" ? "entry" : "exit"}>{parseInt(register.value).toFixed(2)}</span></Registers>)
-                    })} </>
+                    <CashFlow> {registers[0].map((register, item) => {
+                        return (<Registers>{register.day} <p>{register.description}</p> <span className={register.type == "entry" ? "entry" : "exit"}>{parseFloat(register.value).toFixed(2).replace(".", ",")}</span></Registers>)
+                    })} </CashFlow>
                 )
         ):(<div><p>Carregando...</p></div>)
         
@@ -60,7 +60,7 @@ function Mainpage (){
                                 {
                                 (registers.length > 0)?(
                                 (registers[0].length > 0) ?
-                                    (<h3>Saldo <span className={registers[1] >= 0 ? "positive" : "negative"}>{parseInt(registers[1]).toFixed(2)}</span></h3>) :
+                                    (<h3>Saldo <span className={registers[1] >= 0 ? "positive" : "negative"}>{parseFloat(registers[1]).toFixed(2).replace(".", ",")}</span></h3>) :
                                     (<></>)):(<></>)
                                 }
                     </Main>
@@ -139,7 +139,7 @@ const StyledLink = styled(Link)`
     color: #FFFFFF;
     border: none;
     text-decoration: none;
-    padding: 2%
+    padding: 2%;
 `;
 
 const Main = styled.main`
@@ -147,7 +147,7 @@ const Main = styled.main`
     //align-items: center;
     justify-content: center;
     width: 80vw;
-    height: 70vh;
+    height: 70%;
     background: #FFFFFF;
     border-radius: 5px;
     font-family: 'Raleway';
@@ -194,6 +194,14 @@ const Main = styled.main`
     }
 `;
 
+const CashFlow = styled.div`
+    width: 100%;
+    //min-height: 100%;
+    height: 700%;
+    overflow-y: scroll;
+    overflow-x: visible;
+`;
+
 const Registers = styled.div`
     display: flex;
     flex-direction: column;
@@ -201,7 +209,7 @@ const Registers = styled.div`
    // height: 100%;
     flex-direction: initial;
     justify-content: space-around;
-    padding-top: 8%;
+    margin-top: 5%;
     text-align: right;
 
     font-family: 'Raleway';
@@ -209,7 +217,6 @@ const Registers = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
-
     color: #C6C6C6;
 
     p {

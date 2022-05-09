@@ -31,7 +31,7 @@ function Outflow(){
     function montarFormularioOutflow(){
         return (
             <>
-                <input type="text" id="value" value={outflowInInfo.value} placeholder="Valor" required
+                <input type="number" id="value" value={outflowInInfo.value} placeholder="Valor" required
                     onChange={(e) => setOutflowInInfo({ ...outflowInInfo, value: e.target.value })} />
 
                 <input type="text" id="description" value={outflowInInfo.description} placeholder="Descrição" required

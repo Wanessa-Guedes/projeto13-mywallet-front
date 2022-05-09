@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 function Register(){
     const [userRegisterInfo, setUserRegisterInfo] = useState({ name: "", email: "", password: "", confirm: ""});
     const navigate = useNavigate();
-    //TODO: Prestar atenção nessa função e mudar o nome
+
     async function postRegister (e) {
         e.preventDefault();
         try {
@@ -16,17 +16,13 @@ function Register(){
                 const data = { name: userRegisterInfo.name, email: userRegisterInfo.email, password: userRegisterInfo.password, confirm: userRegisterInfo.confirm};
                 console.log(data)
                 await axios.post("http://localhost:5000/signUp", data);
-                    //{name: 'Teste123', email: 'teste123@gmail.com', password: 'teste123', confirm: 'teste123'}
-                    //{name: 'Teste1234', email: 'teste1234@gmail.com', password: 'teste1234', confirm: 'teste1234'}
-                    //{name: 'teste12345', email: 'teste12345@gmail.com', password: 'teste12345', confirm: 'teste12345'}
                     navigate("/");
             } else {
                 alert("As senhas não são iguais! Tente novamente.");
                 setUserRegisterInfo({ name:"", email: "", password: "", confirm:""});
             }
-            //TODO: navigate("Para a tela 3 ou 6 --> Depende dos dados cadastrados!")
         } catch (e) {
-            console.log("Erro ao efetuar o registro.", e);
+            alert(e.response.data);
             setUserRegisterInfo({ name:"", email: "", password: "", confirm:""});
         }
     } 

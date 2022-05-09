@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import Context from "./contexts/Context";
 
-//TODO: iON-ICON EXIT REDIRECIONAR PARA A PÁGINA PRINCIPAL E LIMPAR USUÁRIO E SENHA
-//TODO: Não há registros de Entrada ou saída --> Ai tem que fazer uma lógica com os estados provavelmente
-//TODO: Botões Nova entrada e Nova saída tem que levar para as próximas rotas
 function Mainpage (){
 
     const {token, setToken} = useContext(Context);
@@ -22,7 +19,8 @@ function Mainpage (){
             promise.then(res => {
                 if(res.data.length > 0){
                 setRegisters(res.data)}});
-            promise.catch(e => console.log('Erro na página principal', e));
+            promise.catch(e => {alert(e.response.data)
+                                        navigate("/")});
         }, [token])
         
         
@@ -35,7 +33,7 @@ function Mainpage (){
                     <div><p> Não há registros de entrada ou saída</p></div>
                 ) : (
                     <CashFlow> {registers[0].map((register, item) => {
-                        return (<Registers>{register.day} <p>{register.description}</p> <span className={register.type == "entry" ? "entry" : "exit"}>{parseFloat(register.value).toFixed(2).replace(".", ",")}</span></Registers>)
+                        return (<Registers><div>{register.day} <p>{register.description}</p></div> <span className={register.type == "entry" ? "entry" : "exit"}>{parseFloat(register.value).toFixed(2).replace(".", ",")}</span></Registers>)
                     })} </CashFlow>
                 )
         ):(<div><p>Carregando...</p></div>)
@@ -44,6 +42,8 @@ function Mainpage (){
     }
 
     function logout(){
+        setToken("");
+        setUserName("");
         navigate("/");
     }
 
@@ -223,6 +223,7 @@ const Registers = styled.div`
         font-size: 16px;
         line-height: 19px;
         color: #000000;
+        margin-left: 5%;
     }
 
     .entry {
@@ -240,5 +241,11 @@ const Registers = styled.div`
         font-weight: 400;
         font-size: 16px;
         line-height: 19px;
+    }
+
+    div {
+        flex-direction: inherit;
+        width: 70%;
+        display: flex;
     }
 `;

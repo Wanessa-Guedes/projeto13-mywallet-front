@@ -21,11 +21,11 @@ function SignIn () {
                 setToken(promise.data.token);
                 navigate("/mainpage");
         } catch (e) {
-            console.log("Erro ao efetuar o log-in.", e)
+            alert(e.response.data);
             setUserSignInInfo({ email: "", password: "" });
         }
     } 
-//TODO: Tem que colocar um onClick no botão Entrar
+
     function montarFormularioSignIn(){
         return (
             <>
@@ -43,7 +43,7 @@ function SignIn () {
     }
 
     const formularioSignIn = montarFormularioSignIn();
-    //TODO: Olhar track it: Cadastro e login
+
     return (
         <>
             <Main>

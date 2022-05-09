@@ -22,12 +22,11 @@ function Outflow(){
                 setOutflowInInfo({ value: "", description: "" });
                 navigate("/mainpage");
         } catch (e) {
-            console.log("Erro ao efetuar ao registrar entrada.");
+            alert(e.response.data);
             setOutflowInInfo({ value: "", description: "" });
         }
     } 
 
-    //TODO: Tem que colocar um onClick no botão Entrar
     function montarFormularioOutflow(){
         return (
             <>

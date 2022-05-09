@@ -27,7 +27,6 @@ function Register(){
         }
     } 
 
-    //TODO: Tem que colocar um onClick no botão Cadastrar
     function montarFormularioSignIn(){
         return (
             <>
@@ -51,7 +50,7 @@ function Register(){
     }
 
     const formularioSignIn = montarFormularioSignIn();
-    //TODO: Olhar track it: Cadastro e login
+
     return (
         <>
             <Main>
